@@ -23,10 +23,9 @@ JS Master - это интерактивная платформа, которая
 
 ## Технологии
 
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- LocalStorage (для хранения данных)
+- HTML
+- CSS
+- JavaScript 
 
 ## Установка и запуск
 
