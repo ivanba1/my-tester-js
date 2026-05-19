@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Master — Практикуй JavaScript</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="logo">JS Master</div>
+            <h1>Добро пожаловать!</h1>
+            <p class="greeting-text">
+                Здесь ты сможешь практиковать свои навыки JavaScript, 
+                узнавать что-то новое и соревноваться с другими.
+            </p>
+            
+            <div class="auth-buttons">
+                <button id="showRegisterBtn" class="btn-primary">Регистрация</button>
+                <button id="showLoginBtn" class="btn-secondary">Вход</button>
+            </div>
+
+            <div id="registerForm" class="auth-form" style="display: none;">
+                <h3>Регистрация</h3>
+                <input type="text" id="regUsername" placeholder="Имя пользователя" autocomplete="off">
+                <input type="password" id="regPassword" placeholder="Пароль">
+                <input type="password" id="regConfirm" placeholder="Подтвердите пароль">
+                <button id="doRegisterBtn" class="btn-primary">Зарегистрироваться</button>
+                <p class="error-message" id="regError"></p>
+            </div>
+
+            <div id="loginForm" class="auth-form" style="display: none;">
+                <h3>Вход</h3>
+                <input type="text" id="loginUsername" placeholder="Имя пользователя">
+                <input type="password" id="loginPassword" placeholder="Пароль">
+                <button id="doLoginBtn" class="btn-primary">Войти</button>
+                <p class="error-message" id="loginError"></p>
+            </div>
+        </div>
+    </div>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
