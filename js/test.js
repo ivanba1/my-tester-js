@@ -41,8 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     renderQuestion();
     
-    // Кнопка завершения
+    // Привязываем обработчики кнопок
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
     const finishBtn = document.getElementById('finishBtn');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', prevQuestion);
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextQuestion);
+    }
+    
     if (finishBtn) {
         finishBtn.addEventListener('click', finishTest);
     }
@@ -80,7 +91,7 @@ function renderQuestion() {
 
     // Управление кнопками
     if (prevBtn) {
-        prevBtn.disabled = currentIndex === 0;
+        prevBtn.disabled = (currentIndex === 0);
     }
     
     if (nextBtn) {
@@ -98,16 +109,19 @@ function selectOption(optionIndex) {
 }
 
 function nextQuestion() {
+    // Проверяем, что выбран ответ на текущий вопрос
     if (userAnswers[currentIndex] === null) {
-        alert('Выберите ответ');
+        alert('Пожалуйста, выберите ответ перед тем как продолжить');
         return;
     }
     
-    if (currentIndex < currentQuestions.length - 1) {
+    // Если это последний вопрос, завершаем тест
+    if (currentIndex === currentQuestions.length - 1) {
+        finishTest();
+    } else {
+        // Иначе переходим к следующему вопросу
         currentIndex++;
         renderQuestion();
-    } else {
-        finishTest();
     }
 }
 
@@ -119,9 +133,9 @@ function prevQuestion() {
 }
 
 function finishTest() {
-    // Проверяем, что на последний вопрос дан ответ
-    if (userAnswers[currentIndex] === null) {
-        alert('Выберите ответ на последний вопрос');
+    // Проверяем, что на последний вопрос дан ответ (если мы завершаем досрочно)
+    if (userAnswers[currentIndex] === null && currentIndex === currentQuestions.length - 1) {
+        alert('Пожалуйста, выберите ответ на последний вопрос');
         return;
     }
     
@@ -160,7 +174,7 @@ function finishTest() {
     
     addResult(result);
     
-    alert(`Тест завершен!\nПравильных ответов: ${correctCount}/${currentQuestions.length}\nПроцент: ${percent}%\nВремя: ${timeSpent} секунд`);
+    alert(`Тест завершен!\n\nПравильных ответов: ${correctCount}/${currentQuestions.length}\nПроцент: ${percent}%\nВремя: ${timeSpent} секунд`);
     
     localStorage.removeItem('js_master_test_config');
     window.location.href = 'dashboard.html';
