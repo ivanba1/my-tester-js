@@ -39,4 +39,4 @@ JS Master - это интерактивная платформа, которая
 1. Клонируйте репозиторий или скачайте файлы проекта:
 
 ```bash
-git clone https://github.com/your-username/js-master.git
+git clone https://github.com/ivanba1/my-tester-js.git
