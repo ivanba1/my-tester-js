@@ -41,21 +41,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     renderQuestion();
     
-    // Привязываем обработчики кнопок
+    // ГЛАВНОЕ: привязываем обработчики к кнопкам
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const finishBtn = document.getElementById('finishBtn');
     
     if (prevBtn) {
-        prevBtn.addEventListener('click', prevQuestion);
+        prevBtn.onclick = prevQuestion;
     }
     
     if (nextBtn) {
-        nextBtn.addEventListener('click', nextQuestion);
+        nextBtn.onclick = nextQuestion;
     }
     
     if (finishBtn) {
-        finishBtn.addEventListener('click', finishTest);
+        finishBtn.onclick = finishTest;
     }
 });
 
@@ -72,7 +72,6 @@ function renderQuestion() {
     if (currentSpan) currentSpan.textContent = currentIndex + 1;
     if (totalSpan) totalSpan.textContent = currentQuestions.length;
 
-    // Рендерим варианты ответов
     if (optionsList) {
         optionsList.innerHTML = '';
         question.options.forEach((option, idx) => {
@@ -82,14 +81,13 @@ function renderQuestion() {
                 optionDiv.classList.add('selected');
             }
             optionDiv.textContent = option;
-            optionDiv.addEventListener('click', function() {
+            optionDiv.onclick = function() {
                 selectOption(idx);
-            });
+            };
             optionsList.appendChild(optionDiv);
         });
     }
 
-    // Управление кнопками
     if (prevBtn) {
         prevBtn.disabled = (currentIndex === 0);
     }
@@ -109,23 +107,24 @@ function selectOption(optionIndex) {
 }
 
 function nextQuestion() {
-    // Проверяем, что выбран ответ на текущий вопрос
+    // Добавим отладку в консоль
+    console.log('nextQuestion вызвана, индекс:', currentIndex);
+    
     if (userAnswers[currentIndex] === null) {
-        alert('Пожалуйста, выберите ответ перед тем как продолжить');
+        alert('Пожалуйста, выберите ответ');
         return;
     }
     
-    // Если это последний вопрос, завершаем тест
     if (currentIndex === currentQuestions.length - 1) {
         finishTest();
     } else {
-        // Иначе переходим к следующему вопросу
         currentIndex++;
         renderQuestion();
     }
 }
 
 function prevQuestion() {
+    console.log('prevQuestion вызвана');
     if (currentIndex > 0) {
         currentIndex--;
         renderQuestion();
@@ -133,11 +132,7 @@ function prevQuestion() {
 }
 
 function finishTest() {
-    // Проверяем, что на последний вопрос дан ответ (если мы завершаем досрочно)
-    if (userAnswers[currentIndex] === null && currentIndex === currentQuestions.length - 1) {
-        alert('Пожалуйста, выберите ответ на последний вопрос');
-        return;
-    }
+    console.log('finishTest вызвана');
     
     let correctCount = 0;
     currentQuestions.forEach((question, idx) => {
@@ -148,7 +143,6 @@ function finishTest() {
     
     const timeSpent = Math.floor((Date.now() - startTime) / 1000);
     const percent = Math.round((correctCount / currentQuestions.length) * 100);
-    
     const currentUser = getCurrentUser();
     
     let modeText = '';
@@ -174,7 +168,7 @@ function finishTest() {
     
     addResult(result);
     
-    alert(`Тест завершен!\n\nПравильных ответов: ${correctCount}/${currentQuestions.length}\nПроцент: ${percent}%\nВремя: ${timeSpent} секунд`);
+    alert('Тест завершен!\n\nПравильных ответов: ' + correctCount + '/' + currentQuestions.length + '\nПроцент: ' + percent + '%\nВремя: ' + timeSpent + ' секунд');
     
     localStorage.removeItem('js_master_test_config');
     window.location.href = 'dashboard.html';
